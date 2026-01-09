@@ -1,7 +1,7 @@
 import Navbar from './Navbar';
 import './calendar.css';
 
-export default function Calendar() {
+export default function Calendar(props) {
     let cal = [];
     //const days = Array.from({length: 7});
     const days = ['Mon', 'Tues', 'Wed', 'Thrus', 'Fri', 'Sat', 'Sun']
@@ -16,11 +16,11 @@ export default function Calendar() {
 
     return (
         <>
-            <Navbar />
+            <Navbar changeMonth={props.changeMonth} />
             <div className="calendar">
 
                 {days.map((day) => (
-                    <div className='days' >{day}</div>
+                    <div className='days' key={day} >{day}</div>
                 ))}
 
                 {cal.map((week, weekIndex) => (
