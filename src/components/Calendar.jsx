@@ -1,37 +1,45 @@
 import Navbar from './Navbar';
 import './calendar.css';
+import { useEffect, useState } from 'react';
 
 export default function Calendar(props) {
-    let cal = [];
-    //const days = Array.from({length: 7});
-    const days = ['Mon', 'Tues', 'Wed', 'Thrus', 'Fri', 'Sat', 'Sun']
+    const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+    const days = ['Sun', 'Mon', 'Tues', 'Wed', 'Thrus', 'Fri', 'Sat'];        
+    const [firstDay, setFirstDay] = useState(new Date("2026", props.month).getDay());
+    const [lastDate, setLastDate] = useState(new Date("2026", props.month+1, "0").getDate());
 
-    for (let i = 0; i < 7; i++) {
-        let week = [];
-        for (let j = 0; j < 5; j++) {
-            week[j] = i*5+j+1;
-        }
-        cal[i] = week;
-    }
+    useEffect(()=> {
+        setFirstDay(new Date("2026", props.month).getDay());
+        setLastDate(new Date("2026", props.month+1, "0").getDate());
+    }, [props.month]);
+  
 
     return (
         <>
-            <Navbar changeMonth={props.changeMonth} />
+            <Navbar changeMonth={props.changeMonth} month={months[props.month]}/>
             <div className="calendar">
 
                 {days.map((day) => (
                     <div className='days' key={day} >{day}</div>
                 ))}
 
-                {cal.map((week, weekIndex) => (
-                    <div className="week" key={weekIndex}>
-                        {week.map((date, dateIndex) => (
-                            <div className="date" key={dateIndex}>
-                                {date}
-                            </div>
-                        ))}
+                {Array.from({length: firstDay}).map((_, index) => (
+                    <div className="date" key={index}></div>
+                ))}
+
+                {Array.from({length: lastDate}).map( (_, date) => (
+                    <div className="date" key={date}>
+                       {date+1}
                     </div>
                 ))}
+
+                {Array.from({length: 35-(lastDate+firstDay)}).map( (_, index) => (
+                    <div className="date" key={index}>
+                       
+                    </div>
+                ))}
+
+
             </div>
         </>
     );
