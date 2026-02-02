@@ -7,11 +7,17 @@ export default function Calendar(props) {
     const days = ['Sun', 'Mon', 'Tues', 'Wed', 'Thrus', 'Fri', 'Sat'];        
     const [firstDay, setFirstDay] = useState(new Date("2026", props.month).getDay());
     const [lastDate, setLastDate] = useState(new Date("2026", props.month+1, "0").getDate());
+    const [selectedDate, setSelectedDate] = useState();
 
     useEffect(()=> {
         setFirstDay(new Date("2026", props.month).getDay());
         setLastDate(new Date("2026", props.month+1, "0").getDate());
     }, [props.month]);
+
+
+    const handleDateClick = (date) => {
+        console.log(date);
+    };
   
 
     return (
@@ -28,7 +34,7 @@ export default function Calendar(props) {
                 ))}
 
                 {Array.from({length: lastDate}).map( (_, date) => (
-                    <div className="date" key={date}>
+                    <div className="date" key={date} onClick={() => handleDateClick(date)} >
                        {date+1}
                     </div>
                 ))}
@@ -41,6 +47,11 @@ export default function Calendar(props) {
 
 
             </div>
+
+            <div className='popup' >
+
+            </div>
+
         </>
     );
 }
