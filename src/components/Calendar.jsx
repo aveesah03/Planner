@@ -17,6 +17,7 @@ export default function Calendar(props) {
 
     const handleDateClick = (date) => {
         console.log(date);
+        setSelectedDate(date+1);
     };
   
 
@@ -48,9 +49,13 @@ export default function Calendar(props) {
 
             </div>
 
-            <div className='popup' >
-
-            </div>
+            {selectedDate !== null && (
+                <div className="popup">
+                    <h4>Date: {selectedDate}</h4>
+                    <p>Todo list goes here</p>
+                    <button onClick={() => setSelectedDate(null)}>Close</button>
+                </div>
+            )}
 
         </>
     );
